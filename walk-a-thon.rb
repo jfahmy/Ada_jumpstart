@@ -2,7 +2,6 @@ puts "Welcome to Crystal's Walk-A-Thon Tracker"
 puts "Our goal is to raise money!"
 
 puts "Enter the earning goal for this event:"
-<<<<<<< HEAD
 goal = gets.chomp
 
 puts "Enter the amount earned per lap (per person)"
@@ -17,8 +16,6 @@ until idx == 5
 	
 end
 
-
-=======
 goal = gets.chomp.to_i
 
 puts "Enter the amount earned per lap (per person)"
@@ -69,4 +66,4 @@ end
 
 #puts walker_list.inspect
 #puts walker_list.length
->>>>>>> 60650259160eafa5af11e009ec3d3f0f9b840e1c
+
