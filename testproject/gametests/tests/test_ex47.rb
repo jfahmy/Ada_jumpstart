@@ -7,11 +7,12 @@ class TestGame < Test::Unit::TestCase
     #This is testing the Room class we created by creating the variable gold
     # which takes name and description of the room. Then the assert_equal, which is a function
     # of the test/unit gem makes sure that gold.path and gold.name equal what we think they should equal!
-    # By the way, there should be no path for this room unless we give it one
+    # Notice we did not give a path to this room, just a name and desription, but the object
+    # does have an empty path hash
     gold = Room.new("GoldRoom",
-          """This room has gold in it you can grab. There's a door to the
-        north.""")
+          """This room has gold in it you can grab. There's a door to the north.""")
     assert_equal("GoldRoom", gold.name)
+    assert_equal("""This room has gold in it you can grab. There's a door to the north.""", gold.description)
     assert_equal({}, gold.paths)
 
   end
