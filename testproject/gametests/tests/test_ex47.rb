@@ -18,11 +18,15 @@ class TestGame < Test::Unit::TestCase
   end
 
   def test_room_paths()
+    #initializing or creating room objects?
     center = Room.new("Center", "Test room in center.")
     north = Room.new("North", "Test room in the north.")
     south = Room.new("South", "Test room in the south.")
 
+
     center.add_paths({'north' => north, 'south' => south})
+    #calling the go function from the room class with the path key
+    #and making sure that it equals the given value with assert_equal
     assert_equal(north, center.go('north'))
     assert_equal(south, center.go('south'))
   end
@@ -37,6 +41,8 @@ class TestGame < Test::Unit::TestCase
     down.add_paths({'up' => start})
 
     assert_equal(west, start.go('west'))
+    # !!!????? 'east' and 'up' are set to start by the add_paths function above
+    # but what about the west and down that is referenced???
     assert_equal(start, start.go('west').go('east'))
     assert_equal(start, start.go('down').go('up'))
   end
