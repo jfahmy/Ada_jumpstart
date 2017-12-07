@@ -5,15 +5,9 @@ limiter = input.length/2
 output = 0
 
 input.length.times do |count|
-	i = 1
-	while i <= limiter
-		if input[count] == input[count-i]
-			output += input[count-i].to_i 
-			break
-		else
-			i += 1
+		if input[count] == input[(count-limiter)]
+			output += input[count].to_i
 		end
-	end
 end
 
 puts output
