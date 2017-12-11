@@ -15,7 +15,7 @@ class Sentence
 
 #taking word_list and setting word variable to the word type
 # and returning it
-  def peek(word_list)
+  def self.peek(word_list)
       if word_list
         word = word_list[0]
         return word[0]
