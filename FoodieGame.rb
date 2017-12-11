@@ -1,13 +1,17 @@
 #Creating the map class, that each restaraunt scene will be a subclass of
+# it knows to do something called enter and in this case just immediately exits
 class Scene
   def enter()
-    puts "not working"#What is this exit for?? Do we actually need this class or is it just in the LearnRuby book as an example of subclassing??
+    raise "Scene 'enter' must not be used directly. Please subclass Scene and
+            provide a meaningful implementation for the 'enter' method"
     exit(1)
   end
 end
 
+#This class will run the game from scene to scene?
 class SceneRunner
-  #This will run the game from scene to scene
+
+  #Creating the object scene_map
   def initialize(scene_map)
     @scene_map = scene_map
   end
@@ -21,9 +25,16 @@ class SceneRunner
       current_scene = @scene_map.next_scene(next_scene_name)
     end
 
+    # Each room has the enter() function which begins the scene play instructions
+    # when the below is called with the name of the
     current_scene.enter()
   end
 end
+
+# Notice that each room has enter() which begins the scene play instructions
+# Regarless of user input a string will be returned at the conclusion
+# Which will give the user either the death scene, a reference to the next room,
+# a repeat of the current scene (if they input something invalid), or the final winning scene
 
 
 class EndGame < Scene
@@ -273,8 +284,12 @@ class Winner < Scene
   end
 end
 
+  #This is creating the class map
 class Map
-
+  # setting up hashes which will later be used to... ?
+  # @@ is a class variable meaning that it's global or static and can't be changed and that
+  # if one object instance changes the value of the variable that new value will
+  # NOT change for all other objects
   @@scenes = {
     'hot_chicken1' => HotChicken1.new(),
     'hot_chicken2' => HotChicken2.new(),
@@ -291,6 +306,9 @@ class Map
     @start_scene = start_scene
   end
 
+  # call the next_scene function  and give it a parameter of next_scene_name
+  # This looks at the hash using next_scene_name as the key and gets the
+  # corresponding value from the @@scenes hashes
   def next_scene(scene_name)
     val = @@scenes[scene_name]
     return val
@@ -302,6 +320,9 @@ class Map
 
 end
 
+# creating the object a_map using the instructions in class Map, calling HotChicken1.new(),
 a_map = Map.new('hot_chicken1')
+# creating object a_game using the instruction from class SceneRunner
 a_game = SceneRunner.new(a_map)
+#
 a_game.play()

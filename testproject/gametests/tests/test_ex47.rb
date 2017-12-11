@@ -1,4 +1,5 @@
 require "ex47/game.rb"
+require "../"
 require "test/unit"
 
 class TestGame < Test::Unit::TestCase
@@ -18,7 +19,7 @@ class TestGame < Test::Unit::TestCase
   end
 
   def test_room_paths()
-    #initializing or creating room objects?
+    #initializing or creating room objects
     center = Room.new("Center", "Test room in center.")
     north = Room.new("North", "Test room in the north.")
     south = Room.new("South", "Test room in the south.")
@@ -41,10 +42,14 @@ class TestGame < Test::Unit::TestCase
     down.add_paths({'up' => start})
 
     assert_equal(west, start.go('west'))
-    # !!!????? 'east' and 'up' are set to start by the add_paths function above
-    # but what about the west and down that is referenced???
+    # start.go('west') returns west, then west.go('east') returns start
+    # chained methods
     assert_equal(start, start.go('west').go('east'))
     assert_equal(start, start.go('down').go('up'))
+  end
+
+  def test_restaurants
+    
   end
 
 end
