@@ -16,19 +16,23 @@ input =
 1112	1260	809	72	1104	156	104	1253	793	462	608	84	99	1174	449	929
 707	668	1778	1687	2073	1892	62	1139	908	78	1885	800	945	712	57	65"
 
-input = input.split("\n")
-# mapping each character in each existing array into a new nested array
-# and sorting the numbers within each array
+rows = input.split("\n").map do |row|
+  row.split(" ").map(&:to_i)
+end
 
-#input.split(' ').map(&:to_i).sort
-input = input.map { |line| line.split(' ') }
+checksum = []
+puts "-----------------------------------"
 
+rows.each do |line|
+  line.detect do |num|
+    # detect is locating the divisible number for us
+    divisor = line.detect { |i| num != i && num % i == 0}
+      # notice the if statement can be used in the same line and after the action we want executed
+      checksum << (num / divisor) if divisor
+  end
+end
 
-#output = 0
+#using inject method to sum all the values in the array
+checksum = checksum.inject(:+)
 
-#input.length.times do |index|
-#  output += input[index][-1].to_i - input[index][0].to_i
-#end
-
-
-puts input[0]
+puts checksum

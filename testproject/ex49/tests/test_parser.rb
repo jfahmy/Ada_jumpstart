@@ -3,17 +3,25 @@ require "test/unit"
 
 class TestParser < Test::Unit::TestCase
 
-  def test_sentence
-    command = Sentence.new("player", "kill", "bear")
-    assert_equal("player", command.subj)
-  end
+  @@sentence = Sentence.new("player", "kill", "bear")
 
   def test_peek()
-      assert_equal(Sentence.peek([["verb", "kill"], ["stop", "the"], ["noun", "bear"]]), "verb")
+      assert_equal(@@sentence.peek([["verb", "kill"], ["stop", "the"], ["noun", "bear"]]), "verb")
   end
 
   def test_match()
-      asssert_equal(Sentence.match([["verb", "kill"], ["noun", "bear"]], "verb"), ["verb", "kill"])
+      assert_equal(@@sentence.match([["verb", "kill"], ["noun", "bear"]], "verb"), ["verb", "kill"])
   end
+
+  def test_subject
+      assert_equal(@@sentence.parse_subject([["verb", "kill"], ["stop", "the"], ["noun", "bear"]]), ['noun', 'player'])
+  end
+
+  def test_object
+      assert_equal(@@sentence.parse_object([["verb", "kill"], ["stop", "the"], ["noun", "bear"]]), ["noun", "bear"])
+  end
+#  def test_parse_sentence()
+#      assert_equal(@@sentence.parse_sentence([["verb", "kill"], ["stop", "the"], ["noun", "bear"]]), "bear", "player", "kill")
+#  end
 
 end

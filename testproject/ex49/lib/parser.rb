@@ -15,7 +15,7 @@ class Sentence
 
 #taking word_list and setting word variable to the word type
 # and returning it
-  def self.peek(word_list)
+  def peek(word_list)
       if word_list
         word = word_list[0]
         return word[0]
@@ -96,3 +96,8 @@ class Sentence
     end
 
 end
+
+# can't figure out how to get this to run in the terminal
+# when I try to run x = parse_sentence([["verb", "kill"], ["stop", "the"], ["noun", "bear"]])
+# I get an error - WHY
+#NoMethodError: undefined method `parse_sentence' for main:Object
