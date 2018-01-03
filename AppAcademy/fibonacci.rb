@@ -4,6 +4,9 @@ def fibonacci(num)
 
     # Compute Fibonacci number in the num position
     num.times do
+    	# we use this extra temp variable because we need to 
+    	# reassign the variable a, but we do not want to loose a's original value
+    	# because we need it for b = temp + b 
         temp = a
         a = b
         # Add up previous two numbers in sequence.
