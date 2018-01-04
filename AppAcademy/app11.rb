@@ -7,13 +7,6 @@
 def third_greatest(nums)
 
 nums = nums.sort
-nums = nums.last(3)
-magic_num = nums.first
-	
-return magic_num
+return nums[-3]
 
 end
-
-# Is it okay that I did this a different way than the app academy solution? 
-# I understand the solution when I work through it but it seems over complicated for Ruby?
-# I can't imagine how I would have organically designed that solution
