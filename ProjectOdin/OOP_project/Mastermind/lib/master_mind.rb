@@ -1,14 +1,3 @@
-=begin
-Use colorize gem for fun colors
-Need a way to generate a random combination of 4 pins, there are 6 possible colors
-Store that key combination
-Then, need a way for the user to @board 4 pins of their choosing, using the 6 possible colors
-Then we need to check the user @board agains the key combination and return feedback
-Feedback will use black dots to indicate right pin in the right place
-And feedback will use white dots to indicate right color but in wrong place
-User has 11 guesses to get the key combination right
-=end
-
 require 'colorize'
 
 
