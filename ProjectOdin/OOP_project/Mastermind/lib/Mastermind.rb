@@ -1,7 +1,11 @@
+require_relative 'sequence_check'
+require_relative 'Code_generator'
+require_relative 'AI'
 require 'colorize'
 
+class Game
 
-class Mastermind
+attr_accessor :board, :board_checks, :turn
 
 def initialize
   #arrays within arrays to store the user @board
@@ -37,8 +41,9 @@ def initialize
 
   @turn = -1
 
-  @secret_sequence = generate_random
+  @mode = ""
 end
+
 
 KEY = {
   "R" => :light_red,
@@ -49,17 +54,18 @@ KEY = {
   "T" => :light_cyan
 }
 
-#generating a random array which will be stored for the game
-def generate_random
-  set_options = ["R", "G", "Y", "B", "P", "T"]
-  Array.new(4) { set_options.sample }
-end
-
 # this is actually setting the colors on the game board
 def checker(input, turn)
-  marks = index_checker(input)
-  black = marks[0]
-  white = marks[1] + marks[0]
+  #instantiating objects in the sequence_check class
+  if @mode == "codebreaker"
+    guess = Sequence_check.new(input.split(""), @code.sequence)
+  else
+    guess = Sequence_check.new(input.split(""), @code)
+  end
+  # using a method from the sequence_check class to return array of the things we need to mark on the board
+  mark = guess.results
+  black = mark[0]
+  white = mark[1] + mark[0]
 
   i = 0
   while i < black
@@ -73,42 +79,6 @@ def checker(input, turn)
   end
 
 end
-#Next two methods are giving user feedback about how close their guess was after each turn
-#checking for same index and then taking the elements that weren't matched and sending them
-# to another method to check for those index counts
-# has to be a better way to do this than how I'm doing it...
-def index_checker(input)
-  sequence = @secret_sequence
-  count = 0
-  input = input.chars
-  leftover_input = []
-  leftover_sequence = []
-
-  input.each_with_index do |char, idx|
-    if char == sequence[idx]
-      count += 1
-    else
-      leftover_input << char
-      leftover_sequence << sequence[idx]
-    end
-  end
-
-diff_index_checker(leftover_input, leftover_sequence, count)
-end
-
-def diff_index_checker(input, sequence, count)
-  count2 = 0
-  already_counted = []
-
-    input.each do |char|
-      if sequence.include?(char) && !already_counted.include?(char)
-        count2 += 1
-        already_counted << char
-      end
-    end
-[count, count2]
-end
-
 
 def set_sequence(input, round)
   @board[round][0] = "@".colorize(KEY[input[0]])
@@ -117,7 +87,6 @@ def set_sequence(input, round)
   @board[round][3] = "@".colorize(KEY[input[3]])
 end
 
-
 # the @turn vairable keeps track of what turn we're on, this method counts up with each turn
 def turn_count
   @turn += 1
@@ -125,18 +94,19 @@ def turn_count
 end
 
 #checking user input was valid
-def valid_input?(input)
-  valid = ["R", "G", "Y", "B", "P", "T"]
-  input = input.split("")
-  return false if input.length != 4
-    input.each do |char|
-      if !valid.include?(char)
-        return false
-        break
+  def valid_input?(input)
+    valid = ["R", "G", "Y", "B", "P", "T"]
+    input = input.split("")
+    return false if input.length != 4
+      input.each do |char|
+        if !valid.include?(char)
+          return false
+          break
+        end
       end
-    end
-  true
-end
+    true
+  end
+
 
 #checking for a win on the most recent turn
 def win?
@@ -148,7 +118,7 @@ def win?
   true
 end
 
-#mechanism for taking user input and making moves on the board
+
 def turn
   puts "Pick a sequence of 4 colored pins using the letter key provided:"
   puts "@".colorize(:light_red) + " = R"
@@ -157,20 +127,22 @@ def turn
   puts "@".colorize(:light_blue) + " = B"
   puts "@".colorize(:light_magenta) + " = P "
   puts "@".colorize(:light_cyan) + " = T "
-  puts
+  #this helps us cheat and end the game earlier but need to remove this line for actual play
+  puts "#{@code.sequence}"
   user_input = gets.strip.upcase
-    if valid_input?(user_input)
-      turn = turn_count
-      set_sequence(user_input, turn)
-      checker(user_input, turn)
-    else
+    if !valid_input?(user_input)
       puts "Sorry, that wasn't a valid sequence."
       turn
+    else
+      round = turn_count
+      set_sequence(user_input, round)
+      checker(user_input, round)
     end
 end
 
+
 #the play engine, calling the win? method after each turn
-def play
+def engine
   until win? || @turn == 11
     turn
     display_board
@@ -204,8 +176,61 @@ def display_board
   puts "____________"
 end
 
+def play_ai
+ puts "Input a sequence of 4 colored pins using the letter key provided:"
+ puts "@".colorize(:light_red) + " = R"
+ puts "@".colorize(:light_green) + " = G"
+ puts "@".colorize(:light_yellow) + " = Y"
+ puts "@".colorize(:light_blue) + " = B"
+ puts "@".colorize(:light_magenta) + " = P "
+ puts "@".colorize(:light_cyan) + " = T "
+ puts "Then, the computer will attempt to guess."
+ user_input = gets.strip.upcase
+  if valid_input?(user_input)
+    @code = user_input.split("")
+    run_ai(@code)
+  else
+    puts "Sorry, that wasn't a valid sequence."
+    play_ai
+  end
+
 end
 
-game = Mastermind.new
-game.play
-#["@".colorize(:light_green), "@".colorize(:light_magenta), "@".colorize(:yellow), "@".colorize(:cyan)]
+def run_ai(code)
+  start = AI.new
+  2.times do
+    puts "taking a turn..."
+    round = turn_count
+    ai_input = start.breakcode(@board, @board_checks)
+    set_sequence(ai_input, round)
+    checker(ai_input, round)
+    display_board
+  end
+
+end
+
+def pick_mode
+  puts "There are two play options. You could choose the code yourself and have the computer guess the sequence or you can try to break the computer's secret code."
+  puts "Would you like to play as the code breaker? Or set the code?"
+  puts "(type 1 to play in code breaker mode or type 2 to play as the code setter)"
+  puts ">"
+  user_input = gets.strip
+    if user_input == "2"
+      puts "Pick a tough sequence and stump the computer!!!"
+      play_ai
+    elsif user_input == "1"
+      @code = Code_generator.new
+      @mode = "codebreaker"
+      engine
+    else
+      puts "Please pick one of the play options:"
+      puts "(type 1 to play in code breaker mode or type 2 to play as the code setter)"
+      pick_mode
+    end
+end
+
+end
+
+
+game = Game.new
+game.pick_mode
