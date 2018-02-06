@@ -198,23 +198,31 @@ end
 
 def run_ai(code)
   start = AI.new
-  12.times do
-    puts "taking a turn..."
+  until win? || @turn == 11
+    puts "The computer is taking a turn..."
+    sleep(1)
     round = turn_count
-
-    ai_input = start.breakcode(@board, @board_checks, round)
-
+    ai_input = start.breakcode(@board_checks, round)
     set_sequence(ai_input, round)
     checker(ai_input, round)
     display_board
   end
 
+  if win? == true
+    puts "Looks like the computer beat you this time! You can always try again..."
+  else
+    puts "Jeez, you've stumped it. Guess I need to make this AI a little smarter..."
+  end
+
 end
 
 def pick_mode
-  puts "There are two play options. You could choose the code yourself and have the computer guess the sequence or you can try to break the computer's secret code."
+  puts "There are two play options."
+  puts "You could choose the code yourself and have the computer guess the sequence or you can try to break the computer's secret code."
+  puts "---------------------------------------------------------------"
   puts "Would you like to play as the code breaker? Or set the code?"
-  puts "(type 1 to play in code breaker mode or type 2 to play as the code setter)"
+  puts "---------------------------------------------------------------"
+  puts "Type 1 to play as the code breaker OR type 2 to play as the code setter:"
   puts ">"
   user_input = gets.strip
     if user_input == "2"
@@ -225,8 +233,7 @@ def pick_mode
       @mode = "codebreaker"
       engine
     else
-      puts "Please pick one of the play options:"
-      puts "(type 1 to play in code breaker mode or type 2 to play as the code setter)"
+      puts "That input was invalid."
       pick_mode
     end
 end
