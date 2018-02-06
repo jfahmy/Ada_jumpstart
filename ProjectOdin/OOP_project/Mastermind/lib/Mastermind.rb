@@ -60,7 +60,7 @@ def checker(input, turn)
   if @mode == "codebreaker"
     guess = Sequence_check.new(input.split(""), @code.sequence)
   else
-    guess = Sequence_check.new(input.split(""), @code)
+    guess = Sequence_check.new(input, @code)
   end
   # using a method from the sequence_check class to return array of the things we need to mark on the board
   mark = guess.results
@@ -198,10 +198,12 @@ end
 
 def run_ai(code)
   start = AI.new
-  2.times do
+  12.times do
     puts "taking a turn..."
     round = turn_count
-    ai_input = start.breakcode(@board, @board_checks)
+
+    ai_input = start.breakcode(@board, @board_checks, round)
+
     set_sequence(ai_input, round)
     checker(ai_input, round)
     display_board
