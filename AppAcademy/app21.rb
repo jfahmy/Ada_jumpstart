@@ -8,25 +8,19 @@
 # Difficulty: hard.
 
 def num_repeats(string)
-	count = 0
+counter = 0
+repeating_letters = []
 
-	idx = 0
-	idx2 = idx + 1
-	while idx < string.length
-		match = ""
-		while idx2 < string.length
-			if string[idx] == string[idx2] && match == ""
-				match = string[idx2]
-				count += 1
-			end
-			idx2 += 1
+	string.length.times do |i|
+		if ((repeating_letters.include? string[i]) != true) && (string.count(string[i]) > 1)
+			counter += 1
+			repeating_letters << string[i]
 		end
-			idx += 1 
-		end
+	end
 
-return count
+	return counter
 
 end
 
 puts num_repeats("caakalckk")
-
+puts "answer equals 3"

@@ -1,12 +1,13 @@
 def fibonacci(num)
+    # the fibonacci sequence always starts with
     a = 0
     b = 1
 
     # Compute Fibonacci number in the num position
-    num.times do
-    	# we use this extra temp variable because we need to 
+    index.times do
+    	# we use this extra temp variable because we need to
     	# reassign the variable a, but we do not want to loose a's original value
-    	# because we need it for b = temp + b 
+    	# because we need it for b = temp + b
         temp = a
         a = b
         # Add up previous two numbers in sequence.
@@ -17,7 +18,7 @@ def fibonacci(num)
 end
 
 #returns number in the 4th position of the fibonacci sequence
-puts fibonacci(4)
+puts fibonacci(6, 3)
 
 
 def fib_array(num)
@@ -35,4 +36,3 @@ array
 end
 
 puts fib_array(4)
-
