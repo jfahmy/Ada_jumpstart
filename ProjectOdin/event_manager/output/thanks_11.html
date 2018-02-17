@@ -5,7 +5,7 @@
 	<title>Thank You!</title>
 </head>
 <body>
-	<h1> Thanks <%= name%></h1>
+	<h1> Thanks Colin</h1>
 	<p>Thanks for coming to our conference.  We couldn't have done it without you!</p>
   <p>
     Political activism is at the heart of any democracy and your voice needs to be heard.
@@ -13,20 +13,27 @@
   </p>
 
 	<table>
-		<% if legislators.kind_of?(Array) %>
+		
 			<th>Name</th><th>Website</th>
-				<% legislators.each do |legislator| %>
+				
 				<tr>
-					<td><%= "#{legislator.name}" %></td>
-					<td><%= "#{legislator.urls.join}" %></td>
+					<td>Edward J. Markey</td>
+					<td>http://www.markey.senate.gov/</td>
 				</tr>
-			<% end %>
-		<% else %>
-			<th></th>
-			<td><%= "#{legislators}" %></td>
-		<% end %>
+			
+				<tr>
+					<td>Elizabeth Warren</td>
+					<td>http://www.warren.senate.gov/</td>
+				</tr>
+			
+				<tr>
+					<td>Joseph P. Kennedy III</td>
+					<td>http://kennedy.house.gov/</td>
+				</tr>
+			
+		
 	</table>
-	<p> We will get in touch with you using this number: <%= phone%></p>
+	<p> We will get in touch with you using this number: 14018685000</p>
 	<p> Let us know if this is not the right number to reach you.</p>
 </body>
 </html>

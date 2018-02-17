@@ -31,6 +31,11 @@ def save_thank_you_letters(id,form_letter)
 	end
 end
 
+def phone_check(number)
+
+
+end
+
 puts "Event Manager Initialized!"
 
 contents = CSV.open "event_attendees.csv", headers: true, header_converters: :symbol
@@ -43,6 +48,8 @@ contents.each do |row|
 	name = row[:first_name]
 
 	zipcode = clean_zipcode(row[:zipcode])
+
+	phone = row[:homephone]
 
 	legislators = legislators_by_zipcode(zipcode)
 
