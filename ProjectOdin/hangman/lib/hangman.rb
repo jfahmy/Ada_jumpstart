@@ -156,9 +156,3 @@ end
 
 game = Hangman.new
 game.start
-
-=begin
-"____\n|   |\n|   \n|\n|\n|\n|\n|__________\n|__________|"
-str.insert(index, str2)
-hang.insert(15, "o")
-=end
