@@ -21,7 +21,7 @@ end
 
 def display_games
 Dir.mkdir("saved_games") unless Dir.exists? "saved_games"
-games = Dir.entries("saved_games").reject{|entry| entry == "." || entry == ".."}
+games = Dir.glob('*')
 	if games.count == 0
 		puts "You have no saved games yet."
 		puts "Let's start a new game."
@@ -73,15 +73,12 @@ end
 def play
 	until @guess == 7 || @game == "Win!"
 			puts @secret_word
-			puts "Are you ready to play? You have #{@guess} guesses."
-			puts
+			puts "Are you ready to play? You have #{@guess} guesses.\n"
 			hanging_man(@guess)
 			puts
-			puts "Secret Word: #{@word_display.join(" ")}"
-			puts
-			puts "Enter a letter or a word >"
-			puts "(OR type exit to save and end this game session.)"
-			puts
+			puts "Secret Word: #{@word_display.join(" ")}\n"
+			puts "Enter a letter or a word >\n"
+			puts "(OR type exit to save and end this game session.)\n"
 			user_input = gets.chomp
 				if user_input == "exit"
 					return save_game
