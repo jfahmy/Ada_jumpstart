@@ -14,8 +14,6 @@ class LinkedList
       #storing the current head of the list as new entry
       #setting new head of the list to our passed in value
       @head = Node.new(value, @head)
-      #Amazing you got it girl... you got it.
-      puts "prepended #{@head.value}, moving #{@head.next_node.value}"
     end
 
   end
@@ -114,8 +112,10 @@ class LinkedList
 
   #returns the index of the node containing data, returns nil if not found
   def find(data)
+    #use our contain method to see if the data is even in our linked_list
     return nil if contains?(data) == false
     node = @head
+    #use our size method to detect how many times we need to loop through
     length = size
 
     length.times do |index|
