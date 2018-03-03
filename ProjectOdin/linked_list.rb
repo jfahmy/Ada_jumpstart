@@ -1,4 +1,4 @@
-#This is where we'll store our full list?
+#This is where we'll store our full list
 class LinkedList
 
   def initialize
