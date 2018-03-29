@@ -16,6 +16,7 @@ class LinkedList
       @head = Node.new(value, @head)
     end
 
+
   end
 
   #adds a new node to the end of the list
