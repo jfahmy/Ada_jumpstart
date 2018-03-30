@@ -1,5 +1,27 @@
-require "caesar_cipher"
+require "TicTacToe.rb"
 
+describe Players do
+  context "When initializing the Players class" do
+
+    it "Assigns the player name and symbol attributes to a Player object" do
+      playerX = Players.new("Momo", "X")
+        expect(playerX.name).to eql("Momo")
+        expect(playerX.symbol).to eql("X")
+    end
+  end
+end
+
+describe Board do
+  context "When initializing the Board class" do
+
+    
+  end
+end
+
+
+
+
+=begin
 describe "caesar_cipher" do
 
   context "given an empty string" do
@@ -57,3 +79,4 @@ describe "caesar_cipher" do
   end
 
 end
+=end

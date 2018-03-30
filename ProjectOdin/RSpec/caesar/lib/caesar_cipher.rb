@@ -26,4 +26,4 @@ new_string
 
 end
 
-puts caesar_cipher("test my cipher", 5)
+#caesar_cipher("Test! My! Cipher!", -2)

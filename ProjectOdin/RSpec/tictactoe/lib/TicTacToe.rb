@@ -104,5 +104,5 @@ class Board
   end
 end
 
-game = Board.new()
-game.start()
+#game = Board.new()
+#game.start()
