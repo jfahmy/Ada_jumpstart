@@ -13,14 +13,17 @@ end
 
 class BinarySearchTree
 
-	def initialize(array)
-		puts "initializing our search tree with " + array[0].to_s
-		@root = Node.new(array[0])
-		tree_queue(array)
+	def initialize(root = nil)
+		@root = root
 	end
 
+	def set_root(root_value)
+		@root = Node.new(root_value)
+		puts "Out Binary Search Tree's root is set to " + @root.value.to_s
+	end
 
 	def tree_queue(array)
+		set_root(array.shift)
 		array.each do |num|
 			insert(num)
 		end
@@ -53,4 +56,5 @@ class BinarySearchTree
 
 end
 
-node = BinarySearchTree.new([5, 1, 7, 4, 23, 8, 9, 4, 3, 7, 9, 67, 6345, 324])
+run = BinarySearchTree.new
+run.tree_queue([5, 1, 7, 4, 23, 8, 9, 4, 3, 7, 9, 67, 6345, 324])
