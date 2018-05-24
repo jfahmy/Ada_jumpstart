@@ -24,7 +24,7 @@ class BinarySearchTree
 
 	def tree_queue(array)
 		set_root(array.shift)
-		array.each do |num|
+		array.shuffle.each do |num|
 			insert(num)
 		end
 	end
@@ -54,7 +54,30 @@ class BinarySearchTree
 		end
 	end
 
+	def bredth_first_search(target)
+		queue = [@root]
+
+		until queue.empty? do
+			current_node = queue.shift
+				return current_node.value.to_s if current_node.value == target
+				queue << current_node.left_child unless current_node.left_child.nil?
+				queue << current_node.right_child unless current_node.right_child.nil?
+		end
+		nil
+	end
+
+	def depth_first_search(target)
+		stack = [@root]
+
+		until stack.empty? do
+			current_node = stack.pop
+				return current
+		end
+
+	end
+
 end
 
 run = BinarySearchTree.new
 run.tree_queue([5, 1, 7, 4, 23, 8, 9, 4, 3, 7, 9, 67, 6345, 324])
+run.bredth_first_search(4)
