@@ -19,7 +19,7 @@ class BinarySearchTree
 
 	def set_root(root_value)
 		@root = Node.new(root_value)
-		puts "Out Binary Search Tree's root is set to " + @root.value.to_s
+		puts "Our Binary Search Tree's root is set to " + @root.value.to_s
 	end
 
 	def tree_queue(array)
@@ -38,23 +38,23 @@ class BinarySearchTree
 		while nil != current_node
 				if (value < current_node.value) && (current_node.left_child == nil)
 					current_node.left_child = Node.new(value)
-					puts value.to_s + " has been made left child of " + current_node.value.to_s
+					#puts value.to_s + " has been made left child of " + current_node.left_child.parent_node.value.to_s
 				elsif (value > current_node.value) && (current_node.right_child == nil)
 					current_node.right_child = Node.new(value)
-					puts value.to_s + " has been made right child of " + current_node.value.to_s
+					#puts value.to_s + " has been made right child of " + current_node.right_child.parent_node.value.to_s
 				elsif (value < current_node.value)
 					current_node = current_node.left_child
-					puts "current_node is " + current_node.value.to_s
+					#puts "current_node is " + current_node.value.to_s
 				elsif (value > current_node.value)
 					current_node = current_node.right_child
-					puts "current_node is " + current_node.value.to_s
+					#puts "current_node is " + current_node.value.to_s
 				else
 					return
 				end
 		end
 	end
 
-	def bredth_first_search(target)
+	def breadth_first_search(target)
 		queue = [@root]
 
 		until queue.empty? do
@@ -66,18 +66,25 @@ class BinarySearchTree
 		nil
 	end
 
-	def depth_first_search(target)
-		stack = [@root]
+	def depth_first_search(target, current_node = @root)
+		stack = []
 
-		until stack.empty? do
-			current_node = stack.pop
-				return current
+		loop do
+			if current_node != nil
+				stack << current_node
+				current_node = current_node.left_child
+			else
+				return nil if stack.empty?
+				current_node = stack.pop
+				return current_node.value if current_node.value == target
+				current_node = current_node.right_child
+			end
 		end
-
 	end
 
 end
 
 run = BinarySearchTree.new
 run.tree_queue([5, 1, 7, 4, 23, 8, 9, 4, 3, 7, 9, 67, 6345, 324])
-run.bredth_first_search(4)
+run.breadth_first_search(4)
+run.depth_first_search(7)
