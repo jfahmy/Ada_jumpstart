@@ -34,7 +34,7 @@ class BinarySearchTree
 	def insert(value)
 		puts "inserting: " + value.to_s
 		current_node = @root
-		puts "current_node is " + current_node.value.to_s
+		#puts "We are at the root node : " + current_node.value.to_s
 		while nil != current_node
 				if (value < current_node.value) && (current_node.left_child == nil)
 					current_node.left_child = Node.new(value)
@@ -68,23 +68,33 @@ class BinarySearchTree
 
 	def depth_first_search(target, current_node = @root)
 		stack = []
-
 		loop do
-			if current_node != nil
-				stack << current_node
-				current_node = current_node.left_child
-			else
-				return nil if stack.empty?
-				current_node = stack.pop
-				return current_node.value if current_node.value == target
-				current_node = current_node.right_child
-			end
+				if current_node != nil
+					stack << current_node
+					current_node = current_node.left_child
+				else
+					return nil if stack.empty?
+					current_node = stack.pop
+					return current_node.value if current_node.value == target
+					current_node = current_node.right_child
+				end
 		end
 	end
+
+	def dfs_recursive(target, current_node = @root)
+		puts current_node.value.to_s if current_node.value == target
+		leaf = dfs_recursive(target, current_node.left_child) if current_node.left_child != nil
+		return leaf unless leaf.nil?
+		leaf = dfs_recursive(target, current_node.right_child) if current_node.right_child != nil
+		return leaf unless leaf.nil?
+		nil
+	end
+
 
 end
 
 run = BinarySearchTree.new
-run.tree_queue([5, 1, 7, 4, 23, 8, 9, 4, 3, 7, 9, 67, 6345, 324])
-run.breadth_first_search(4)
-run.depth_first_search(7)
+run.tree_queue((numbers = 20.times.map{rand(500)}))
+#run.breadth_first_search(4)
+#run.depth_first_search(7)
+#run.dfs_recursive(99)
