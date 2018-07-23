@@ -8,3 +8,6 @@ rocks.each do |rock|
 end
 
 puts "Heaviest rock is: #{max_rock}"
+
+#alternative solution using inject
+puts "Heavist rock is: #{rocks.inject{|max_rock, rock| max_rock > rock ? max_rock : rock}}"
